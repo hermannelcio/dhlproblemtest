@@ -1,0 +1,37 @@
+Design Description of a company Test
+There is 5 classes that manage the task. The main object is the object package. So, classes that keep volumetric weight, normalized weight and classes that optimize cost are related to class Package. A class which reads CSV files called ReadArchive.java were created as well. This class will be the first step because it instances and fill up its objects.
+In the class ReadArchive.java there are the method that read all files is included in a given path. It uses java.io.File to do it. The method readParseCSV access a file get its contents by line. Then verify which kind of content and fill up a map of network friends and the packages to test. This method is implemented using Stream and lambda provided by JAVA 8.
+As soon as it is called to get the shipping lowest cost a property of Package class, the system call OptimizeCost.java class. This class fills up some variables, then a new map is created based on target following this logic.
+
+first loop (getTargetWays)
+For each item in the friends network
+	verify if there is the target
+		put the target as a new key of a map of maps called possibleWaysReachTarget and
+		put its friend and hardness in one of its maps
+close for
+
+second loop (createNewMapBasedOnTarget)
+then get the new map possibleWaysReachTarget
+for each item in the map above
+	verify if the last friend is not the source
+		get the last friend and pass trough the third loop
+close for
+
+third loop (getTargetFriendsWays)
+For each item in the friends network again the friend of the target became a new target
+	verify if there is the new target
+		add the new target on its correct mapping of the possibleWaysReachTarget list
+		if there are more than one way to reach the target by the same friend 
+			it creates a new map.
+close for
+
+As soon as the new map is completed contenting all possibilities of sending to a target the system calculates the lowest hardness (totalsumming)
+
+
+for each possibleWaysReachTarget list
+	sum all its values and put in a variable if it is zero
+	verify if the new sum is lower than old variable value
+		variable get its sum
+close for.
+
+It returns the lowest sum and calculates the lowest cost.
